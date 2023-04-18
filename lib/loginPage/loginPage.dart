@@ -1,9 +1,4 @@
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 import '../userListPage/userlist_ui.dart';
 
@@ -22,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/image.png'),
             fit: BoxFit.cover,
@@ -46,19 +41,19 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(
-                height: 50,
+                height: 30,
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(50, 20, 50, 40),
+                padding: const EdgeInsets.fromLTRB(50, 20, 50, 40),
                 decoration: (BoxDecoration(
-                    //   boxShadow: [
-                    //   BoxShadow(
-                    //     color: Colors.grey.withOpacity(0.5),
-                    //     spreadRadius: 3,
-                    //     blurRadius: 4,
-                    //     offset: Offset(0, 3),
-                    //   ),
-                    // ],
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 3,
+                        blurRadius: 4,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20))),
                 height: MediaQuery.of(context).size.width * 0.86,
@@ -75,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                       child: TextFormField(
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: "Email",
                         ),
                       ),
@@ -90,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                         controller: _passController,
 
                         keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: "Пароль",
                         ),
                         obscureText: _hidePass,
@@ -103,18 +98,18 @@ class _LoginPageState extends State<LoginPage> {
                         // ),
                       ),
                     ),
-                    SizedBox(),
+                    const SizedBox(),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.purple.shade700,
-                          fixedSize: Size(300, 45),
+                          backgroundColor: Colors.purple.shade700,
+                          fixedSize: const Size(300, 45),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(22))),
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => UserListPage(),
+                            builder: (context) => const UserListPage(),
                           ),
                         );
                       },

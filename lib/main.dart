@@ -1,8 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
-import 'authorization/login_ui.dart';
+import 'loginPage/loginPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +12,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(body: LoginPage()),
     );
