@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:http/http.dart';
 
 import 'model/userlist_model.dart';
@@ -20,10 +18,6 @@ class _UserListPageState extends State<UserListPage> {
   void initState() {
     super.initState();
     _userFuture = _fetchUser();
-  }
-
-  void _refreshPage() {
-    setState(() {});
   }
 
   List<User> users = [];
@@ -45,72 +39,81 @@ class _UserListPageState extends State<UserListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.chevron_left),
-            iconSize: 35,
-            color: Colors.black,
-          ),
-          title: Text(
-            'Пользователи',
-            style: TextStyle(color: Colors.black),
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-        ),
         body: FutureBuilder<List<User>>(
             future: _userFuture,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return ListView.builder(
-                    itemCount: snapshot.data?.length,
-                    itemBuilder: (context, index) {
-                      return SizedBox(
-                          height: 100,
-                          child: Row(
-                            // mainAxisAlignment: MainAxisAlignment.cen,
-                            children: [
-                              SizedBox(width: 20),
-                              Container(
-                                width: 50,
-                                height: 50,
-                                decoration: const BoxDecoration(
-                                    // color: Colors.white,
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                        image: AssetImage("assets/user.png"))),
-                              ),
-                              SizedBox(width: 20),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                return CustomScrollView(
+                  slivers: [
+                    const SliverAppBar(
+                      backgroundColor: Colors.white,
+                      expandedHeight: 100,
+                      pinned: true,
+                      flexibleSpace: FlexibleSpaceBar(
+                        centerTitle: true,
+                        title: Text(
+                          'Пользователи',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 23,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                    ),
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (BuildContext context, int index) {
+                          return SizedBox(
+                              height: 100,
+                              child: Row(
+                                // mainAxisAlignment: MainAxisAlignment.cen,
                                 children: [
-                                  Text(
-                                    users[index].name.toString(),
-                                    style: TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w700),
+                                  const SizedBox(width: 20),
+                                  Container(
+                                    width: 50,
+                                    height: 50,
+                                    decoration: const BoxDecoration(
+                                        // color: Colors.white,
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                            image:
+                                                AssetImage("assets/user.png"))),
                                   ),
-                                  Text(
-                                    users[index].email.toString(),
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                  Text(users[index].website.toString()),
+                                  const SizedBox(width: 20),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        users[index].name.toString(),
+                                        style: const TextStyle(
+                                            fontSize: 25,
+                                            fontWeight: FontWeight.w700),
+                                      ),
+                                      Text(
+                                        users[index].email.toString(),
+                                        style:
+                                            const TextStyle(color: Colors.grey),
+                                      ),
+                                      Text(users[index].website.toString()),
+                                    ],
+                                  )
                                 ],
-                              )
-                            ],
-                          ));
-                    });
+                              ));
+                        },
+                        childCount: snapshot.data?.length,
+                      ),
+                    ),
+                  ],
+                );
               } else if (snapshot.hasError) {
                 return Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      SizedBox(
-                        height: 150,
+                      const SizedBox(
+                        height: 200,
                       ),
                       Container(
                         width: 100,
@@ -121,38 +124,35 @@ class _UserListPageState extends State<UserListPage> {
                             image: DecorationImage(
                                 image: AssetImage("assets/error.png"))),
                       ),
-                      Text(
+                      const Text(
                         'Не удалось загрузить информацию',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w700),
                       ),
-                      SizedBox(
-                          // height: 250,
-                          ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            primary: Colors.purple,
-                            fixedSize: Size(250, 45),
+                            backgroundColor: Colors.purple,
+                            fixedSize: const Size(250, 45),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(22))),
                         onPressed: () {
-                          _fetchUser();
+                          Navigator.pop(context);
                         },
                         child: const Text(
                           'Обновить',
                           style: TextStyle(color: Colors.white, fontSize: 20),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 250,
                       ),
                     ],
                   ),
                 );
               } else {
-                return Center(
-                  child: const SizedBox(
+                return const Center(
+                  child: SizedBox(
                       width: 50,
                       height: 50,
                       child: CircularProgressIndicator(

@@ -2,7 +2,6 @@
 //
 //     final user = userFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 List<User> userFromJson(String str) =>
@@ -35,7 +34,7 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
         name: json["name"],
-        username: json["usernameasd"],
+        username: json["username"],
         email: json["email"],
         address: Address.fromJson(json["address"]),
         phone: json["phone"],
